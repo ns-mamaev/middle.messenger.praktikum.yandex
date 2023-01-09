@@ -1,0 +1,9 @@
+#npm-packages
+node_modules
+
+#completed-build
+dist
+
+#parcel files
+.parcel-cache
+

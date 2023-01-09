@@ -1,0 +1,23 @@
+{
+  "name": "middle.messenger.praktikum.yandex",
+  "version": "1.0.0",
+  "description": "messenger",
+  "scripts": {
+    "start": "parcel src/index.html --port 3000",
+    "build": "parcel build src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ns-mamaev/middle.messenger.praktikum.yandex.git"
+  },
+  "author": "ns-mamaev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ns-mamaev/middle.messenger.praktikum.yandex/issues"
+  },
+  "homepage": "https://github.com/ns-mamaev/middle.messenger.praktikum.yandex#readme",
+  "devDependencies": {
+    "@parcel/transformer-inline-string": "^2.8.2",
+    "parcel": "^2.8.2"
+  }
+}
