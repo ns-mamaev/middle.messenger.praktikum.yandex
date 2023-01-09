@@ -17,7 +17,12 @@
   },
   "homepage": "https://github.com/ns-mamaev/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
-    "@parcel/transformer-inline-string": "^2.8.2",
-    "parcel": "^2.8.2"
+    "@parcel/transformer-sass": "^2.8.2",
+    "parcel": "^2.8.2",
+    "parcel-transformer-hbs": "^1.0.4",
+    "sass": "^1.57.1"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.7"
   }
 }
