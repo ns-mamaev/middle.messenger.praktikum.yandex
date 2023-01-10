@@ -1,5 +1,7 @@
 import tpl from './tpl.hbs';
 import chat from './components/chat';
+import loginPage from './pages/login';
+import './index.scss';
 
 const chatsData = [
   { chatName: 'Иван', lastMessage: 'Скоро ответите?' },
@@ -10,6 +12,10 @@ const chatsData = [
 const root = document.getElementById('root');
 
 const routes = {};
+
+function login() {
+  root.innerHTML = loginPage();
+}
 
 function chats() {
   const ul = document.createElement('ul');
@@ -47,7 +53,7 @@ function route(path, template) {
   }
 }
 
-route('/', greeting);
+route('/', login);
 route('/chats', chats);
 route('*', notFound);
 

@@ -1,0 +1,42 @@
+$font-size: 13px;
+
+.input {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 24px;
+
+  &__field {
+    outline: none;
+    border: none;
+    padding: 8px 0;
+    border-bottom: 1px solid #3369f3;
+    font-size: $font-size;
+    font-weight: 500;
+    line-height: $font-size;
+    color: #1e1e1e;
+
+    &:placeholder-shown + .input__label {
+      font-size: $font-size;
+      line-height: $font-size;
+      top: 8px;
+    }
+
+    &:focus + .input__label {
+      top: -8px;
+      font-size: 9px;
+      line-height: 9px;
+    }
+  }
+
+  &__label {
+    position: absolute;
+    top: -8px;
+    left: 0;
+    font-size: 9px;
+    line-height: 9px;
+    font-weight: 500;
+    color: #999;
+    transition: all 0.2s ease;
+  }
+}
