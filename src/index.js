@@ -1,6 +1,7 @@
 import tpl from './tpl.hbs';
 import chat from './components/chat';
 import loginPage from './pages/login';
+import registerPage from './pages/register';
 import './index.scss';
 
 const chatsData = [
@@ -15,6 +16,10 @@ const routes = {};
 
 function login() {
   root.innerHTML = loginPage();
+}
+
+function register() {
+  root.innerHTML = registerPage();
 }
 
 function chats() {
@@ -53,7 +58,8 @@ function route(path, template) {
   }
 }
 
-route('/', login);
+route('/signin', login);
+route('/signup', register);
 route('/chats', chats);
 route('*', notFound);
 
