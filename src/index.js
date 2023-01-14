@@ -2,13 +2,8 @@ import tpl from './tpl.hbs';
 import chat from './components/chat';
 import loginPage from './pages/login';
 import registerPage from './pages/register';
+import profilePage from './pages/profile';
 import './index.scss';
-
-const chatsData = [
-  { chatName: 'Иван', lastMessage: 'Скоро ответите?' },
-  { chatName: 'BestForex', lastMessage: 'Вам интересна торговля на бирже?' },
-  { chatName: '8-800-555-35-34', lastMessage: 'Займы до 1млн за 10 мин' },
-];
 
 const root = document.getElementById('root');
 
@@ -22,24 +17,8 @@ function register() {
   root.innerHTML = registerPage();
 }
 
-function chats() {
-  const ul = document.createElement('ul');
-  const link = document.createElement('a');
-  link.href = '#/';
-  link.textContent = 'на главную';
-  chatsData.forEach((chatData) => ul.insertAdjacentHTML('beforeend', chat(chatData)));
-  root.appendChild(ul);
-  root.appendChild(link);
-}
-
-function greeting() {
-  let div = document.createElement('div');
-  div.insertAdjacentHTML('afterbegin', tpl({ username: 'Ivan' }));
-  const link = document.createElement('a');
-  link.href = '#/chats';
-  link.textContent = 'чаты';
-  root.appendChild(div);
-  root.appendChild(link);
+function profile() {
+  root.innerHTML = profilePage();
 }
 
 function notFound() {
@@ -60,7 +39,7 @@ function route(path, template) {
 
 route('/signin', login);
 route('/signup', register);
-route('/chats', chats);
+route('/profile', profile);
 route('*', notFound);
 
 function resolveRoute(route) {
