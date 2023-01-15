@@ -3,11 +3,11 @@ import loginPage from './pages/login';
 import registerPage from './pages/register';
 import profilePage from './pages/profile';
 import errorPage from './pages/errorPage';
+import createRouter from './modules/router';
 import './index.scss';
 
 const root = document.getElementById('root');
-
-const routes = {};
+const { router, route } = createRouter(root);
 
 function login() {
   root.innerHTML = loginPage();
@@ -51,12 +51,6 @@ function serverError() {
   });
 }
 
-function route(path, template) {
-  if (typeof template === 'function') {
-    routes[path] = template;
-  }
-}
-
 route('/signin', login);
 route('/signup', register);
 route('/profile', profile);
@@ -65,25 +59,6 @@ route('/error', serverError);
 route('/profile-edit', profileEdit);
 route('/password-edit', passwordEdit);
 route('*', notFound);
-
-function resolveRoute(route) {
-  root.innerHTML = '';
-  if (!routes[route]) {
-    if (routes['*']) {
-      return routes['*'];
-    } else {
-      throw new Error(`Route ${route} doesn't exist!`);
-    }
-  }
-  return routes[route];
-}
-
-function router() {
-  let url = window.location.hash.slice(1) || '/';
-  let route = resolveRoute(url);
-
-  route();
-}
 
 window.addEventListener('DOMContentLoaded', router);
 window.addEventListener('hashchange', router);
