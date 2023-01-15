@@ -4,12 +4,12 @@ import formButton from '../../components/button';
 import input from '../../components/profileInput';
 
 const profileData = [
-  { name: 'email', title: 'Почта', type: 'email' },
-  { name: 'login', title: 'Логин', type: 'text' },
-  { name: 'first_name', title: 'Имя', type: 'text' },
-  { name: 'second_name', title: 'Фамилия', type: 'text' },
-  { name: 'display_name', title: 'Имя в чате', type: 'text' },
-  { name: 'phone', title: 'Телефон', type: 'phone' },
+  { name: 'email', title: 'Почта', type: 'email', value: 'pochta@yandex.ru' },
+  { name: 'login', title: 'Логин', type: 'text', value: 'ivanivanov' },
+  { name: 'first_name', title: 'Имя', type: 'text', value: 'Иван' },
+  { name: 'second_name', title: 'Фамилия', type: 'text', value: 'Иванов' },
+  { name: 'display_name', title: 'Имя в чате', type: 'text', value: 'Иван' },
+  { name: 'phone', title: 'Телефон', type: 'phone', value: '+7 (909) 967 30 30' },
 ];
 
 const passwordData = [

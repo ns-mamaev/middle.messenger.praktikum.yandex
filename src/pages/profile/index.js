@@ -5,5 +5,5 @@ import './profile.scss';
 export default (props = {}) =>
   profileTemplate({
     ...props,
-    profileForm: () => profileForm({ type: 'password' }),
+    profileForm: () => profileForm({ type: 'profile' }),
   });
