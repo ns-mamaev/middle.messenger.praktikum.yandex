@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "messenger",
   "scripts": {
-    "start": "parcel src/index.html --port 3000",
-    "build": "parcel build src/index.html"
+    "start": "parcel build ./src/index.html && node ./server.js",
+    "build": "parcel build ./src/index.html",
+    "dev": "parcel ./src/index.html"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/ns-mamaev/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.2",
+    "express": "^4.18.2",
     "parcel": "^2.8.2",
     "parcel-transformer-hbs": "^1.0.4",
     "sass": "^1.57.1"
