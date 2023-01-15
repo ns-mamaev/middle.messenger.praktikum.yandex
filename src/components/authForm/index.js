@@ -1,9 +1,12 @@
-import Handlebars from 'handlebars';
 import authTemplate from './authForm.hbs';
 import './authForm.scss';
-import input from '../input';
 import button from '../button';
+import input from '../input';
 
-Handlebars.registerPartial('authForm', authTemplate);
-
-export default (props = {}) => authTemplate(props);
+export default ({ buttonText, inputsData, ...props }) => {
+  return authTemplate({
+    ...props,
+    button: button({ buttonText }),
+    inputs: inputsData.map((item) => input(item)).join(''),
+  });
+};

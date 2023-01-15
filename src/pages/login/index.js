@@ -1,17 +1,19 @@
-import tpl from './tpl.hbs';
-import './style.scss';
+import loginTemplate from './login.hbs';
+import './login.scss';
 import authForm from '../../components/authForm';
 
-const inputs = [
+const inputsData = [
   { name: 'login', placeholder: 'Логин', type: 'text' },
   { name: 'password', placeholder: 'Пароль', type: 'password' },
 ];
 
 export default (props = {}) =>
-  tpl({
+  loginTemplate({
     ...props,
-    inputs,
-    buttonText: 'Авторизоваться',
-    heading: 'Вход',
-    link: { href: '#/signup', text: 'Нет аккаунта?' },
+    authForm: authForm({
+      inputsData,
+      heading: 'Вход',
+      buttonText: 'Авторизоваться',
+      link: { href: '#/signup', text: 'Нет аккаунта?' },
+    }),
   });

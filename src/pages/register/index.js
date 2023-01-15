@@ -1,8 +1,8 @@
-import tpl from './tpl.hbs';
-import './style.scss';
+import registerTemplate from './register.hbs';
+import './register.scss';
 import authForm from '../../components/authForm';
 
-const inputs = [
+const inputsData = [
   { name: 'email', placeholder: 'Почта', type: 'email' },
   { name: 'login', placeholder: 'Логин', type: 'text' },
   { name: 'first_name', placeholder: 'Имя', type: 'text' },
@@ -13,10 +13,12 @@ const inputs = [
 ];
 
 export default (props = {}) =>
-  tpl({
+  registerTemplate({
     ...props,
-    inputs,
-    buttonText: 'Зарегистрироваться',
-    heading: 'Регистрация',
-    link: { href: '#/signin', text: 'Войти' },
+    authForm: authForm({
+      inputsData,
+      buttonText: 'Зарегистрироваться',
+      heading: 'Регистрация',
+      link: { href: '#/signin', text: 'Войти' },
+    }),
   });
