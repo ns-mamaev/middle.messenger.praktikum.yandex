@@ -1,4 +1,4 @@
-import tpl from './tpl.hbs';
-import './style.scss';
+import chatTemplate from './chat.hbs';
+import './chat.scss';
 
-export default ({ chatName, lastMessage }) => tpl({ chatName, lastMessage });
+export default (props = {}) => chatTemplate(props);
