@@ -38,7 +38,7 @@ function notFound() {
     errorCode: '404',
     errorText: 'Такой страницы не существует...',
     linkText: 'Назад к чатам',
-    link: '#/chats',
+    link: '#/',
   });
 }
 
@@ -47,14 +47,14 @@ function serverError() {
     errorCode: '500',
     errorText: 'Мы уже фиксим',
     linkText: 'Назад к чатам',
-    link: '#/chats',
+    link: '#/',
   });
 }
 
+route('/', chats);
 route('/signin', login);
 route('/signup', register);
 route('/profile', profile);
-route('/chats', chats);
 route('/error', serverError);
 route('/profile-edit', profileEdit);
 route('/password-edit', passwordEdit);
