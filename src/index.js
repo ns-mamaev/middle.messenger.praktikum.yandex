@@ -1,8 +1,8 @@
-import tpl from './tpl.hbs';
-import chat from './components/chat';
+import chatsPage from './pages/chats';
 import loginPage from './pages/login';
 import registerPage from './pages/register';
 import profilePage from './pages/profile';
+import errorPage from './pages/errorPage';
 import './index.scss';
 
 const root = document.getElementById('root');
@@ -29,14 +29,26 @@ function passwordEdit() {
   root.innerHTML = profilePage({ type: 'passwordEdit' });
 }
 
+function chats() {
+  root.innerHTML = chatsPage();
+}
+
 function notFound() {
-  const p = document.createElement('p');
-  p.textContent = '404 page not Found';
-  root.appendChild(p);
-  const link = document.createElement('a');
-  link.href = '#/';
-  link.textContent = 'на главную';
-  root.appendChild(link);
+  root.innerHTML = errorPage({
+    errorCode: '404',
+    errorText: 'Такой страницы не существует...',
+    linkText: 'Назад к чатам',
+    link: '#/chats',
+  });
+}
+
+function serverError() {
+  root.innerHTML = errorPage({
+    errorCode: '500',
+    errorText: 'Мы уже фиксим',
+    linkText: 'Назад к чатам',
+    link: '#/chats',
+  });
 }
 
 function route(path, template) {
@@ -48,6 +60,8 @@ function route(path, template) {
 route('/signin', login);
 route('/signup', register);
 route('/profile', profile);
+route('/chats', chats);
+route('/error', serverError);
 route('/profile-edit', profileEdit);
 route('/password-edit', passwordEdit);
 route('*', notFound);
