@@ -18,11 +18,17 @@ const passwordData = [
   { name: 'newPasswordRepeat', title: 'Повторите новый пароль', type: 'password' },
 ];
 
-const button = formButton({ buttonText: 'Cохранить' });
 const resolveInputs = (type) => {
-  const inputs = type === 'profile' ? profileData : passwordData;
+  const inputs = type === 'passwordEdit' ? passwordData : profileData;
   return inputs.map((item) => input(item)).join('');
 };
 
-export default ({ type = 'profile' }) =>
-  profileFormTemplate({ button, inputs: resolveInputs(type) });
+const resolveButton = (type) => {
+  return type === 'profile' ? null : formButton({ buttonText: 'Сохранить' });
+};
+
+export default ({ type }) =>
+  profileFormTemplate({
+    button: resolveButton(type),
+    inputs: resolveInputs(type),
+  });

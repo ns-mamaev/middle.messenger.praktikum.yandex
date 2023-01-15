@@ -16,6 +16,18 @@
     margin-bottom: 21px;
   }
 
+  &__profile-name {
+    margin: 0;
+    margin-bottom: 50px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    min-height: 16px;
+    color: #1e1e1e;
+    text-align: center;
+  }
+
   &__action-link {
     padding: 10px 0;
   }
@@ -47,5 +59,13 @@
     &:active {
       transform: scale(0.9);
     }
+  }
+
+  &__actions {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
   }
 }

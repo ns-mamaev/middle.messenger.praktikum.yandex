@@ -1,0 +1,17 @@
+.action-link {
+  padding: 10px 0;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  color: #3369f3;
+  text-decoration: none;
+  border-bottom: 1px solid #eaeaea;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &_type_danger {
+    color: #f00;
+  }
+}

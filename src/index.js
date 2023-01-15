@@ -18,7 +18,15 @@ function register() {
 }
 
 function profile() {
-  root.innerHTML = profilePage();
+  root.innerHTML = profilePage({ type: 'profile' });
+}
+
+function profileEdit() {
+  root.innerHTML = profilePage({ type: 'profileEdit' });
+}
+
+function passwordEdit() {
+  root.innerHTML = profilePage({ type: 'passwordEdit' });
 }
 
 function notFound() {
@@ -40,6 +48,8 @@ function route(path, template) {
 route('/signin', login);
 route('/signup', register);
 route('/profile', profile);
+route('/profile-edit', profileEdit);
+route('/password-edit', passwordEdit);
 route('*', notFound);
 
 function resolveRoute(route) {
