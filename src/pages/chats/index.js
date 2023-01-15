@@ -20,4 +20,4 @@ const chatsData = [
 ];
 
 export default (props = {}) =>
-  chatsTemplate({ ...props, chatsList: chatsData.map((item) => chatItem(item)) });
+  chatsTemplate({ ...props, chatsList: chatsData.map((item) => chatItem(item)).join('') });

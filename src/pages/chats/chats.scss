@@ -1,5 +1,6 @@
 .chats {
   overflow: hidden;
+  display: flex;
 
   &__side-panel {
     // overflow-y: scroll;
@@ -68,5 +69,83 @@
     list-style: none;
     padding: 0;
     margin: 0;
+  }
+
+  &__main-area {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    flex-grow: 1;
+  }
+
+  &__chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  &__messages {
+    flex-grow: 1;
+  }
+
+  &__chat-avatar {
+    width: 34px;
+    height: 34px;
+    background-color: #efefef;
+    border-radius: 50%;
+  }
+
+  &__chat-title {
+    flex-grow: 1;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 13px;
+    color: #1e1e1e;
+  }
+
+  &__action-btn {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: none;
+    background: url(../../../static/kebab.svg) center / 15px 15px no-repeat;
+    cursor: pointer;
+    transition: all 0.1s ease;
+
+    &:hover {
+      background-color: #eaeaea;
+    }
+
+    &:active {
+      transform: scale(0.8);
+    }
+  }
+
+  &__input-area {
+    display: flex;
+    padding: 11px 0;
+    border-top: 1px solid #eaeaea;
+    justify-content: space-between;
+    column-gap: 10px;
+  }
+
+  &__message-input {
+    flex-grow: 1;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 12px;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    background-color: #efefef;
+
+    &:focus {
+      outline: 2px solid #999;
+    }
   }
 }

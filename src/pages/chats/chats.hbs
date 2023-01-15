@@ -1,9 +1,22 @@
-<div class="chat">
+<div class="chats">
   <section class="chats__side-panel">
     <a class="chats__profile-link" href="#/profile">Профиль</a>
     <input type="text" class="chats__search-field" placeholder="Поиск">
     <ul class="chats__chats-list">
       {{{chatsList}}}
     </ul>
+  </section>
+  <section class="chats__main-area">
+    <div class="chats__chat-header">
+      <div class="chats__chat-avatar"></div>
+      <h2 class="chats__chat-title">Иван</h2>
+      <button type="button" class="chats__action-btn"></button>
+    </div>
+    <div class="chats__messages"></div>
+    <div class="chats__input-area">
+      <button class="chats__attach-btn"></button>
+      <input type="text" class="chats__message-input" placeholder="Сообщение">
+      <button class="chats__send-btn"></button>
+    </div>
   </section>
 </div>
