@@ -1,10 +1,13 @@
+@import './styles/variables.scss';
+
 body {
   margin: 0;
 }
 
 :root {
   font-family: 'Inter', Arial, sans-serif;
-  color: #1e1e1e;
+  color: $primary-text-color;
+  background-color: $primary-background-color;
 }
 
 // блок временных стилей попапа с ссылками для удобства ревью
@@ -14,7 +17,7 @@ body {
   top: 10%;
   width: 200px;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: $primary-background-color;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   padding: 10px;
 

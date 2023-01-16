@@ -54,6 +54,7 @@
     text-align: center;
     margin-bottom: 14px;
     position: relative;
+    color: inherit;
 
     &:not(:placeholder-shown) {
       background-image: none;
@@ -142,6 +143,7 @@
     border-radius: 30px;
     border: none;
     background-color: $accent-background-color;
+    color: inherit;
 
     &:focus {
       outline: 2px solid $dark-accent-color;
