@@ -1,23 +1,22 @@
 export default function createRouter(root) {
   const routes = {};
 
-  function resolveRoute(route) {
+  function resolveRoute(url) {
     root.innerHTML = '';
-    if (!routes[route]) {
+    if (!routes[url]) {
       if (routes['*']) {
         return routes['*'];
-      } else {
-        throw new Error(`Route ${route} doesn't exist!`);
       }
+      throw new Error(`Route ${url} doesn't exist!`);
     }
-    return routes[route];
+    return routes[url];
   }
 
   function router() {
-    let url = window.location.hash.slice(1) || '/';
-    let route = resolveRoute(url);
+    const url = window.location.hash.slice(1) || '/';
+    const routeTemplate = resolveRoute(url);
 
-    route();
+    routeTemplate();
   }
 
   function route(path, template) {

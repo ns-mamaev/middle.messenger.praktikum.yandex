@@ -1,7 +1,7 @@
 import profileFormTemplate from './profileForm.hbs';
 import './profileForm.scss';
-import formButton from '../../components/button';
-import input from '../../components/profileInput';
+import formButton from '../button';
+import input from '../profileInput';
 
 const profileData = [
   { name: 'email', title: 'Почта', type: 'email', value: 'pochta@yandex.ru' },
