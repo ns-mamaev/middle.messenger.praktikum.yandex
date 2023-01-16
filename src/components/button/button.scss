@@ -1,10 +1,12 @@
+@import '../../styles/variables.scss';
+
 .button {
   width: 280px;
-  background-color: #3369f3;
+  background-color: $action-color;
   border-radius: 8px;
   font-size: 13px;
   line-height: 13px;
-  color: #fff;
+  color: $light-text-color;
   border: none;
   padding: 12px;
 

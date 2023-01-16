@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .error-page {
   display: flex;
   justify-content: center;
@@ -12,7 +14,6 @@
     font-size: 40px;
     line-height: 40px;
     text-align: center;
-    color: #1e1e1e;
   }
 
   &__subtitle {
@@ -22,7 +23,6 @@
     font-size: 20px;
     line-height: 20px;
     text-align: center;
-    color: #1e1e1e;
   }
 
   &__back-link {
@@ -30,7 +30,7 @@
     font-size: 11px;
     line-height: 11px;
     text-align: center;
-    color: #3369f3;
+    color: $action-color;
     text-decoration: none;
 
     &:hover {
