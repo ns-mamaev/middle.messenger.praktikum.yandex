@@ -1,0 +1,19 @@
+@import '../../styles/variables.scss';
+
+.action-link {
+  padding: 10px 0;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  color: $action-color;
+  text-decoration: none;
+  border-bottom: 1px solid $medium-accent-color;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &_type_danger {
+    color: $danger-color;
+  }
+}
