@@ -4,6 +4,7 @@ export default class Block {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
+    FLOW_CDU: 'flow:component-did-update',
     FLOW_RENDER: 'flow:render',
   };
 
@@ -30,6 +31,7 @@ export default class Block {
     return new Proxy(props, {
       set(target, prop, value) {
         target[prop] = value;
+        self.eventBus.emit(Block.EVENTS.FLOW_CDU);
         return true;
       },
     });
@@ -38,6 +40,7 @@ export default class Block {
   _registerEvents(eventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
@@ -52,11 +55,12 @@ export default class Block {
 
   init() {
     this._createResources();
-    // this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
+    this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
   _componentDidMount() {
     this.componentDidMount();
+    this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
   componentDidMount(oldProps) {}
@@ -65,7 +69,12 @@ export default class Block {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps, newProps) {}
+  _componentDidUpdate(oldProps, newProps) {
+    const responce = this.componentDidUpdate(oldProps, newProps);
+    if (responce) {
+      this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
+    }
+  }
 
   componentDidUpdate(oldProps, newProps) {
     return true;
@@ -75,7 +84,6 @@ export default class Block {
     if (!nextProps) {
       return;
     }
-
     Object.assign(this.props, nextProps);
   };
 
@@ -83,12 +91,8 @@ export default class Block {
     return this._element;
   }
 
-  log() {
-    console.log(this.eventBus);
-  }
-
   _render() {
-    const block = this._render();
+    const block = this.render();
     this._element.innerHTML = block;
   }
 

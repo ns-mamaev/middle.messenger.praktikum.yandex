@@ -86,3 +86,9 @@ const button = new Button({
 });
 
 render('#root', button);
+
+setTimeout(() => {
+  button.setProps({
+    text: 'Click me, please',
+  });
+}, 3000);
