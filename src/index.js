@@ -67,7 +67,8 @@ import Block from './modules/Block';
 function render(selector, block) {
   const root = document.querySelector(selector);
   root.appendChild(block.getContent());
-  console.log(block);
+
+  block.dispatchComponentDidMount();
   return root;
 }
 
