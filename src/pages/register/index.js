@@ -12,13 +12,12 @@ const inputsData = [
   { name: 'password_repeat', placeholder: 'Пароль (ещё раз)', type: 'password' },
 ];
 
-export default (props = {}) =>
-  registerTemplate({
-    ...props,
-    authForm: authForm({
-      inputsData,
-      buttonText: 'Зарегистрироваться',
-      heading: 'Регистрация',
-      link: { href: '#/signin', text: 'Войти' },
-    }),
-  });
+export default (props = {}) => registerTemplate({
+  ...props,
+  authForm: authForm({
+    inputsData,
+    buttonText: 'Зарегистрироваться',
+    heading: 'Регистрация',
+    link: { href: '#/signin', text: 'Войти' },
+  }),
+});

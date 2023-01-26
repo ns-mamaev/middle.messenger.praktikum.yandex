@@ -3,7 +3,9 @@ import chatItem from '../../components/chat';
 import './chats.scss';
 
 const chatsData = [
-  { title: 'Иван', message: 'Привет, как идет работа над проектом?', time: '10:20', counter: 2 },
+  {
+    title: 'Иван', message: 'Привет, как идет работа над проектом?', time: '10:20', counter: 2,
+  },
   {
     title: 'Пётр',
     message:
@@ -19,5 +21,4 @@ const chatsData = [
   },
 ];
 
-export default (props = {}) =>
-  chatsTemplate({ ...props, chatsList: chatsData.map((item) => chatItem(item)).join('') });
+export default (props = {}) => chatsTemplate({ ...props, chatsList: chatsData.map((item) => chatItem(item)).join('') });

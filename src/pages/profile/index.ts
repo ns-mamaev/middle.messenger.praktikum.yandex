@@ -11,10 +11,9 @@ const links = [
 
 const actionLinks = links.map((link) => actionLink(link)).join('');
 
-export default ({ type, ...props }) =>
-  profileTemplate({
-    ...props,
-    profileName: type === 'profile' ? 'Иван' : '',
-    profileForm: () => profileForm({ type }),
-    actionLinks: type === 'profile' ? actionLinks : null,
-  });
+export default ({ type, ...props }) => profileTemplate({
+  ...props,
+  profileName: type === 'profile' ? 'Иван' : '',
+  profileForm: () => profileForm({ type }),
+  actionLinks: type === 'profile' ? actionLinks : null,
+});

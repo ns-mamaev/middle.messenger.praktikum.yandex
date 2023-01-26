@@ -4,12 +4,24 @@ import formButton from '../button';
 import input from '../profileInput';
 
 const profileData = [
-  { name: 'email', title: 'Почта', type: 'email', value: 'pochta@yandex.ru' },
-  { name: 'login', title: 'Логин', type: 'text', value: 'ivanivanov' },
-  { name: 'first_name', title: 'Имя', type: 'text', value: 'Иван' },
-  { name: 'second_name', title: 'Фамилия', type: 'text', value: 'Иванов' },
-  { name: 'display_name', title: 'Имя в чате', type: 'text', value: 'Иван' },
-  { name: 'phone', title: 'Телефон', type: 'phone', value: '+7 (909) 967 30 30' },
+  {
+    name: 'email', title: 'Почта', type: 'email', value: 'pochta@yandex.ru',
+  },
+  {
+    name: 'login', title: 'Логин', type: 'text', value: 'ivanivanov',
+  },
+  {
+    name: 'first_name', title: 'Имя', type: 'text', value: 'Иван',
+  },
+  {
+    name: 'second_name', title: 'Фамилия', type: 'text', value: 'Иванов',
+  },
+  {
+    name: 'display_name', title: 'Имя в чате', type: 'text', value: 'Иван',
+  },
+  {
+    name: 'phone', title: 'Телефон', type: 'phone', value: '+7 (909) 967 30 30',
+  },
 ];
 
 const passwordData = [
@@ -23,12 +35,9 @@ const resolveInputs = (type) => {
   return inputs.map((item) => input(item)).join('');
 };
 
-const resolveButton = (type) => {
-  return type === 'profile' ? null : formButton({ buttonText: 'Сохранить' });
-};
+const resolveButton = (type) => (type === 'profile' ? null : formButton({ buttonText: 'Сохранить' }));
 
-export default ({ type }) =>
-  profileFormTemplate({
-    button: resolveButton(type),
-    inputs: resolveInputs(type),
-  });
+export default ({ type }) => profileFormTemplate({
+  button: resolveButton(type),
+  inputs: resolveInputs(type),
+});

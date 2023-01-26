@@ -7,13 +7,12 @@ const inputsData = [
   { name: 'password', placeholder: 'Пароль', type: 'password' },
 ];
 
-export default (props = {}) =>
-  loginTemplate({
-    ...props,
-    authForm: authForm({
-      inputsData,
-      heading: 'Вход',
-      buttonText: 'Авторизоваться',
-      link: { href: '#/signup', text: 'Нет аккаунта?' },
-    }),
-  });
+export default (props = {}) => loginTemplate({
+  ...props,
+  authForm: authForm({
+    inputsData,
+    heading: 'Вход',
+    buttonText: 'Авторизоваться',
+    link: { href: '#/signup', text: 'Нет аккаунта?' },
+  }),
+});
