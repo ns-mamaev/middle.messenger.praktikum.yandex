@@ -7,6 +7,7 @@
 import './index.scss';
 import Button, { ButtonTypes } from './components/button';
 import render from './core/renderDOM';
+import Profile from './components/profileForm';
 
 // const root = document.getElementById('root');
 // const { router, route } = createRouter(root);
@@ -65,27 +66,9 @@ import render from './core/renderDOM';
 // window.addEventListener('DOMContentLoaded', router);
 // window.addEventListener('hashchange', router);
 
-const button = new Button({
-  type: ButtonTypes.BUTTON,
-  buttonText: 'Я КНОПКА ТЕСТОВАЯ',
-  events: {
-    click: (evt) => console.log(evt),
-  },
-  settings: {
-    withExternalID: true,
-  },
+const profile = new Profile({
+  text: 'Это типо профиль',
+  button: new Button({ type: ButtonTypes.BUTTON, buttonText: 'Я КНОПКА ТЕСТОВАЯ' }),
 });
 
-render('#root', button);
-
-setTimeout(() => {
-  button.setProps({
-    buttonText: 'Другой текст!',
-  });
-}, 2000);
-
-setTimeout(() => {
-  button.setProps({
-    buttonText: 'Другой dтекст!',
-  });
-}, 5000);
+render('#root', profile);

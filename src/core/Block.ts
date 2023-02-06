@@ -24,13 +24,19 @@ export default abstract class Block {
 
   _id: string | null;
 
-  constructor(tagName = 'div', props = {}) {
+  children;
+
+  constructor(tagName = 'div', propsAndChildren = {}) {
+    const { children, props } = this._getChildren(propsAndChildren);
+
+    this.children = children;
+
     this._meta = {
       tagName,
       props,
     };
 
-    this._id = props?.settings?.withExternalID ? makeUUID() : null;
+    this._id = makeUUID();
 
     this.props = this._makePropsProxy({ ...props, _id: this._id });
 
@@ -38,6 +44,39 @@ export default abstract class Block {
 
     this._registerEvents(this.eventBus);
     this.eventBus.emit(Block.EVENTS.INIT);
+  }
+
+  _getChildren(propsAndChildren) {
+    const children = {};
+    const props = {};
+
+    Object.entries(propsAndChildren).forEach(([key, value]) => {
+      if (value instanceof Block) {
+        children[key] = value;
+      } else {
+        props[key] = value;
+      }
+    });
+
+    return { children, props };
+  }
+
+  compile(templator, props) {
+    const propsAndStubs = { ...props };
+
+    Object.entries(this.children).forEach(([key, child]) => {
+      propsAndStubs[key] = `<div data-id=${child._id}></div>`;
+    });
+    const fragment = this._createDocumentElement('template');
+    fragment.innerHTML = templator(propsAndStubs);
+
+    Object.values(this.children).forEach((child) => {
+      const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+
+      stub.replaceWith(child.getContent());
+    });
+
+    return fragment.content;
   }
 
   _makePropsProxy(props: Props) {
@@ -114,15 +153,13 @@ export default abstract class Block {
 
   _render() {
     const block = this.render();
-    console.log('render');
     this._removeEvents();
-    this._element.innerHTML = block;
+    this._element.innerHTML = '';
+    this._element.appendChild(block);
     this._addEvents();
   }
 
-  render(): string {
-    return '';
-  }
+  render() {}
 
   _addEvents() {
     const { events = {} } = this.props;

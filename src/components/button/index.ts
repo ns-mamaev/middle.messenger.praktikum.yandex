@@ -19,7 +19,6 @@ export default class Button extends Block {
 
   render() {
     const { buttonText, _id } = this.props;
-    console.log(_id);
-    return buttonTemplate({ buttonText });
+    return this.compile(buttonTemplate, { buttonText });
   }
 }
