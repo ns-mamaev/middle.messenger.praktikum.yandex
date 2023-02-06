@@ -1,3 +1,4 @@
+import { v4 as makeUUID } from 'uuid';
 import EventBus from './EventBus';
 
 type Props = object;
@@ -17,9 +18,11 @@ export default abstract class Block {
 
   props: Props;
 
-  eventBus: EventBus;
+  private eventBus: EventBus;
 
   _element: HTMLElement;
+
+  _id: string | null;
 
   constructor(tagName = 'div', props = {}) {
     this._meta = {
@@ -27,7 +30,9 @@ export default abstract class Block {
       props,
     };
 
-    this.props = this._makePropsProxy(props);
+    this._id = props?.settings?.withExternalID ? makeUUID() : null;
+
+    this.props = this._makePropsProxy({ ...props, _id: this._id });
 
     this.eventBus = new EventBus();
 
@@ -57,7 +62,11 @@ export default abstract class Block {
   }
 
   _createDocumentElement(tagName: string): HTMLElement {
-    return document.createElement(tagName);
+    const element = document.createElement(tagName);
+    if (this._id) {
+      element.setAttribute('data-id', this._id);
+    }
+    return element;
   }
 
   _createResources() {
@@ -105,11 +114,30 @@ export default abstract class Block {
 
   _render() {
     const block = this.render();
+    console.log('render');
+    this._removeEvents();
     this._element.innerHTML = block;
+    this._addEvents();
   }
 
   render(): string {
     return '';
+  }
+
+  _addEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach((eventName) => {
+      this._element.addEventListener(eventName, events[eventName]);
+    });
+  }
+
+  _removeEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach((eventName) => {
+      this._element.removeEventListener(eventName, events[eventName]);
+    });
   }
 
   getContent() {

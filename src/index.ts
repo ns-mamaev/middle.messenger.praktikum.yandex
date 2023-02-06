@@ -5,7 +5,8 @@
 // import errorPage from './pages/errorPage';
 // import createRouter from './modules/router';
 import './index.scss';
-import Block from './modules/Block';
+import Button, { ButtonTypes } from './components/button';
+import render from './core/renderDOM';
 
 // const root = document.getElementById('root');
 // const { router, route } = createRouter(root);
@@ -64,32 +65,27 @@ import Block from './modules/Block';
 // window.addEventListener('DOMContentLoaded', router);
 // window.addEventListener('hashchange', router);
 
-function render(selector, block) {
-  const root = document.querySelector(selector);
-  root.appendChild(block.getContent());
-
-  block.dispatchComponentDidMount();
-  return root;
-}
-
-class Button extends Block {
-  constructor(props) {
-    super('button', props);
-  }
-
-  render() {
-    return `<span>${this.props.text}</span>`;
-  }
-}
-
 const button = new Button({
-  text: 'Надо нажать на эту кнопку',
+  type: ButtonTypes.BUTTON,
+  buttonText: 'Я КНОПКА ТЕСТОВАЯ',
+  events: {
+    click: (evt) => console.log(evt),
+  },
+  settings: {
+    withExternalID: true,
+  },
 });
 
 render('#root', button);
 
 setTimeout(() => {
   button.setProps({
-    text: 'Click me, please',
+    buttonText: 'Другой текст!',
   });
-}, 3000);
+}, 2000);
+
+setTimeout(() => {
+  button.setProps({
+    buttonText: 'Другой dтекст!',
+  });
+}, 5000);
