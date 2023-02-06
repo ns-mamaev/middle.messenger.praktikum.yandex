@@ -1,19 +1,19 @@
 type EventListener = (...args: any) => void;
 
 export default class EventBus {
-  listeners: Record<string, EventListener[]>;
+  private listeners: Record<string, EventListener[]>;
 
   constructor() {
     this.listeners = {};
   }
 
-  _checkEvent(event: string) {
+  private checkEvent(event: string) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
   }
 
-  attach(event: string, callback: EventListener) {
+  public attach(event: string, callback: EventListener) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
@@ -21,13 +21,13 @@ export default class EventBus {
     this.listeners[event].push(callback);
   }
 
-  detach(event: string, callback: EventListener) {
-    this._checkEvent(event);
+  public detach(event: string, callback: EventListener) {
+    this.checkEvent(event);
     this.listeners[event] = this.listeners[event].filter((listener) => listener !== callback);
   }
 
-  emit(event: string, ...args: any) {
-    this._checkEvent(event);
+  public emit(event: string, ...args: any) {
+    this.checkEvent(event);
     this.listeners[event].forEach((listener) => {
       listener(...args);
     });

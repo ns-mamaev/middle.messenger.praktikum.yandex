@@ -6,5 +6,8 @@
     "max-len": [2, 100],
     "@typescript-eslint/no-unused-vars": 2,
     "no-underscore-dangle": 0
+  },
+  "env": {
+    "browser": true
   }
 } 

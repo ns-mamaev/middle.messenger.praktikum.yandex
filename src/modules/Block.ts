@@ -1,6 +1,8 @@
-import EventBus from './EventBus.ts';
+import EventBus from './EventBus';
 
-export default class Block {
+type Props = object;
+
+export default abstract class Block {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -8,9 +10,16 @@ export default class Block {
     FLOW_RENDER: 'flow:render',
   };
 
-  _element = null;
+  _meta: {
+    tagName: string;
+    props: Props;
+  };
 
-  _meta = null;
+  props: Props;
+
+  eventBus: EventBus;
+
+  _element: HTMLElement;
 
   constructor(tagName = 'div', props = {}) {
     this._meta = {
@@ -26,11 +35,13 @@ export default class Block {
     this.eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _makePropsProxy(props) {
+  _makePropsProxy(props: Props) {
     const self = this;
 
     return new Proxy(props, {
       set(target, prop, value) {
+        // @ts-ignore;
+        // eslint-disable-next-line no-param-reassign
         target[prop] = value;
         self.eventBus.emit(Block.EVENTS.FLOW_CDU);
         return true;
@@ -38,14 +49,14 @@ export default class Block {
     });
   }
 
-  _registerEvents(eventBus) {
+  _registerEvents(eventBus: EventBus) {
     eventBus.attach(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.attach(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.attach(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.attach(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createDocumentElement(tagName) {
+  _createDocumentElement(tagName: string): HTMLElement {
     return document.createElement(tagName);
   }
 
@@ -97,7 +108,9 @@ export default class Block {
     this._element.innerHTML = block;
   }
 
-  render() {}
+  render(): string {
+    return '';
+  }
 
   getContent() {
     return this.element;

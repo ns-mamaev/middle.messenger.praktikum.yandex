@@ -4,7 +4,7 @@
 // import profilePage from './pages/profile';
 // import errorPage from './pages/errorPage';
 // import createRouter from './modules/router';
-// import './index.scss';
+import './index.scss';
 import Block from './modules/Block';
 
 // const root = document.getElementById('root');
@@ -83,7 +83,7 @@ class Button extends Block {
 }
 
 const button = new Button({
-  text: 'Click here!',
+  text: 'Надо нажать на эту кнопку',
 });
 
 render('#root', button);
