@@ -66,9 +66,27 @@ import Profile from './components/profileForm';
 // window.addEventListener('DOMContentLoaded', router);
 // window.addEventListener('hashchange', router);
 
+const changeToRed = (e) => {
+  e.preventDefault();
+  button.setProps({
+    attr: {
+      class: 'button button_color_red',
+    },
+  });
+};
+
+const button = new Button({
+  type: ButtonTypes.BUTTON,
+  buttonText: 'Я КНОПКА ТЕСТОВАЯ',
+  attr: { class: 'button' },
+  events: {
+    click: changeToRed,
+  },
+});
+
 const profile = new Profile({
   text: 'Это типо профиль',
-  button: new Button({ type: ButtonTypes.BUTTON, buttonText: 'Я КНОПКА ТЕСТОВАЯ' }),
+  button: button,
 });
 
 render('#root', profile);

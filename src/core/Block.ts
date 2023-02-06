@@ -61,6 +61,14 @@ export default abstract class Block {
     return { children, props };
   }
 
+  _setAttributes() {
+    const { attr = {} } = this.props;
+
+    Object.entries(attr).forEach(([key, value]) => {
+      this._element.setAttribute(key, value);
+    });
+  }
+
   compile(templator, props) {
     const propsAndStubs = { ...props };
 
@@ -69,7 +77,6 @@ export default abstract class Block {
     });
     const fragment = this._createDocumentElement('template');
     fragment.innerHTML = templator(propsAndStubs);
-
     Object.values(this.children).forEach((child) => {
       const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
 
@@ -120,6 +127,11 @@ export default abstract class Block {
 
   _componentDidMount() {
     this.componentDidMount();
+
+    Object.values(this.children).forEach((child) => {
+      child.dispatchComponentDidMount();
+    });
+
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
@@ -157,6 +169,7 @@ export default abstract class Block {
     this._element.innerHTML = '';
     this._element.appendChild(block);
     this._addEvents();
+    this._setAttributes();
   }
 
   render() {}
