@@ -28,15 +28,10 @@ export default abstract class Component {
 
   _shouldUpdate = false;
 
-  constructor(tagName = 'div', propsAndChildren = {}) {
+  constructor(propsAndChildren = {}) {
     const { children, props } = this._getPropsAndChildren(propsAndChildren);
 
     this.children = this._makePropsProxy(children);
-
-    this._meta = {
-      tagName,
-      props,
-    };
 
     this._id = makeUUID();
 
@@ -50,10 +45,13 @@ export default abstract class Component {
   }
 
   _getPropsAndChildren(propsAndChildren) {
-    const children = {};
-    const props = {};
+    const children: { [key: string]: Component | Component[] } = {};
+    const props: { [key: string]: unknown } = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
+      if (Array.isArray(value) && value.every((item) => item instanceof Component)) {
+        children[key] = value;
+      }
       if (value instanceof Component) {
         children[key] = value;
       } else {
@@ -64,19 +62,29 @@ export default abstract class Component {
     return { children, props };
   }
 
-  _setAttributes() {
-    const { attr = {} } = this.props;
+  private createStub(child) {
+    return `<div data-id="${child._id}"></div>`;
+  }
 
-    Object.entries(attr).forEach(([key, value]) => {
-      this._element.setAttribute(key, value);
-    });
+  private replaceStub(child, fragment) {
+    const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+
+    if (!stub) {
+      return;
+    }
+
+    stub.replaceWith(child.getContent());
   }
 
   protected compile(templator, props) {
     const propsAndStubs = { ...props };
 
     Object.entries(this.children).forEach(([key, child]) => {
-      propsAndStubs[key] = `<div data-id=${child._id}></div>`;
+      if (Array.isArray(child)) {
+        propsAndStubs[key] = child.map((nestedChild) => this.createStub(nestedChild));
+      } else {
+        propsAndStubs[key] = this.createStub(child);
+      }
     });
 
     const fragment = this._createDocumentElement('template');
@@ -84,9 +92,11 @@ export default abstract class Component {
     fragment.innerHTML = templator(propsAndStubs);
 
     Object.values(this.children).forEach((child) => {
-      const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
-
-      stub.replaceWith(child.getContent());
+      if (Array.isArray(child)) {
+        child.forEach((nestedChild) => this.replaceStub(nestedChild, fragment));
+      } else {
+        this.replaceStub(child, fragment);
+      }
     });
 
     return fragment.content;
@@ -101,7 +111,6 @@ export default abstract class Component {
       set(target, prop, value) {
         if (target[prop] !== value) {
           target[prop] = value;
-          this._shouldUpdate = true;
         }
         return true;
       },
@@ -123,14 +132,7 @@ export default abstract class Component {
     return element;
   }
 
-  _createResources() {
-    const { tagName } = this._meta;
-    this._element = this._createDocumentElement(tagName);
-  }
-
   private _init() {
-    this._createResources();
-
     this.init();
 
     this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
@@ -140,12 +142,7 @@ export default abstract class Component {
 
   _componentDidMount() {
     this.componentDidMount();
-
-    Object.values(this.children).forEach((child) => {
-      child.dispatchComponentDidMount();
-    });
-
-    this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
+    console.log(this, 'did mount');
   }
 
   componentDidMount(oldProps = {}) {}
@@ -153,17 +150,23 @@ export default abstract class Component {
   public dispatchComponentDidMount() {
     this.eventBus.emit(Component.EVENTS.FLOW_CDM);
 
-    Object.values(this.children).forEach((child) => child.dispatchComponentDidMount());
+    Object.values(this.children).forEach((child) => {
+      if (Array.isArray(child)) {
+        child.forEach((nestedChild) => nestedChild.dispatchComponentDidMount());
+      } else {
+        child.dispatchComponentDidMount();
+      }
+    });
   }
 
   private _componentDidUpdate(oldProps, newProps) {
-    const responce = this.componentDidUpdate(oldProps, newProps);
+    const responce = this.shouldComponentUpdate(oldProps, newProps);
     if (responce) {
       this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
     }
   }
 
-  componentDidUpdate(oldProps, newProps) {
+  shouldComponentUpdate(oldProps, newProps) {
     return true;
   }
 
@@ -172,7 +175,6 @@ export default abstract class Component {
       return;
     }
 
-    this._shouldUpdate = false;
     const oldProps = { ...this.props };
     const { children, props } = this._getPropsAndChildren(nextProps);
 
@@ -184,10 +186,8 @@ export default abstract class Component {
       Object.assign(this.props, props);
     }
 
-    if (this._shouldUpdate) {
-      this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldProps, nextProps);
-      this._shouldUpdate = false;
-    }
+    this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldProps, nextProps);
+
     Object.assign(this.props, nextProps);
   };
 
@@ -196,12 +196,18 @@ export default abstract class Component {
   }
 
   _render() {
-    const element = this.render();
+    const fragment = this.render();
+
+    const element = fragment.firstElementChild as HTMLElement;
+
+    if (this._element) {
+      this._element.replaceWith(element);
+    }
+    this._element = element;
+
     this._removeEvents();
-    this._element.innerHTML = '';
-    this._element.appendChild(element);
+
     this._addEvents();
-    this._setAttributes();
   }
 
   protected render() {}

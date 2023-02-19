@@ -14,10 +14,6 @@ interface ButtonProps {
 }
 
 export default class Button extends Component {
-  constructor(props: ButtonProps) {
-    super('button', props);
-  }
-
   render() {
     return this.compile(buttonTemplate, this.props);
   }
