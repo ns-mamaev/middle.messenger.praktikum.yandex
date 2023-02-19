@@ -42,9 +42,9 @@ import './profileForm.scss';
 //   inputs: resolveInputs(type),
 // });
 
-import Block from '../../core/Block';
+import Component from '../../core/Component';
 
-export default class Profile extends Block {
+export default class Profile extends Component {
   constructor(props) {
     super('section', props);
   }

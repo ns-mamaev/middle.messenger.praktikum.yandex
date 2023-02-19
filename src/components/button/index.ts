@@ -1,6 +1,6 @@
 import buttonTemplate from './button.hbs';
 import './button.scss';
-import Block from '../../core/Block';
+import Component from '../../core/Component';
 
 export enum ButtonTypes {
   BUTTON = 'button',
@@ -9,16 +9,16 @@ export enum ButtonTypes {
 
 interface ButtonProps {
   type?: ButtonTypes;
-  buttonText?: string;
+  label?: string;
+  events?: Record<string, (e: Event) => void>;
 }
 
-export default class Button extends Block {
+export default class Button extends Component {
   constructor(props: ButtonProps) {
     super('button', props);
   }
 
   render() {
-    const { buttonText, _id } = this.props;
-    return this.compile(buttonTemplate, { buttonText });
+    return this.compile(buttonTemplate, this.props);
   }
 }

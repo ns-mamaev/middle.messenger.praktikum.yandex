@@ -5,9 +5,10 @@
 // import errorPage from './pages/errorPage';
 // import createRouter from './modules/router';
 import './index.scss';
-import Button, { ButtonTypes } from './components/button';
+// import Button, { ButtonTypes } from './components/button';
 import render from './core/renderDOM';
-import Profile from './components/profileForm';
+// import Profile from './components/profileForm';
+import LoginPage from './pages/loginPage';
 
 // const root = document.getElementById('root');
 // const { router, route } = createRouter(root);
@@ -66,27 +67,29 @@ import Profile from './components/profileForm';
 // window.addEventListener('DOMContentLoaded', router);
 // window.addEventListener('hashchange', router);
 
-const changeToRed = (e) => {
-  e.preventDefault();
-  button.setProps({
-    attr: {
-      class: 'button button_color_red',
-    },
-  });
-};
+// const changeToRed = (e) => {
+//   e.preventDefault();
+//   button.setProps({
+//     attr: {
+//       class: 'button button_color_red',
+//     },
+//   });
+// };
 
-const button = new Button({
-  type: ButtonTypes.BUTTON,
-  buttonText: 'Я КНОПКА ТЕСТОВАЯ',
-  attr: { class: 'button' },
-  events: {
-    click: changeToRed,
-  },
-});
+// const button = new Button({
+//   type: ButtonTypes.BUTTON,
+//   buttonText: 'Я КНОПКА ТЕСТОВАЯ',
+//   attr: { class: 'button' },
+//   events: {
+//     click: changeToRed,
+//   },
+// });
 
-const profile = new Profile({
-  text: 'Это типо профиль',
-  button: button,
-});
+// const profile = new Profile({
+//   text: 'Это типо профиль',
+//   button: button,
+// });
 
-render('#root', profile);
+const loginPage = new LoginPage();
+
+render('#root', loginPage);
