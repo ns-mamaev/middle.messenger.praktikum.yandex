@@ -6,7 +6,7 @@
 
   &__side-panel {
     // overflow-y: scroll;
-    padding: 21px 10px;
+    padding: 21px 0;
     box-sizing: border-box;
     min-height: 100vh;
     width: 310px;
@@ -17,6 +17,7 @@
   }
 
   &__profile-link {
+    margin-right: 10px;
     font-weight: 500;
     font-size: 12px;
     line-height: 12px;
@@ -52,7 +53,7 @@
     background: url(../../../static/search.svg) calc(50% - 35px) / 20px no-repeat;
     background-color: $accent-background-color;
     text-align: center;
-    margin-bottom: 14px;
+    margin: 0 10px 14px;
     position: relative;
     color: inherit;
 

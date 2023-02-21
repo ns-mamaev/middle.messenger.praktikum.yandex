@@ -2,7 +2,7 @@ import Component from '../../core/Component';
 import AuthForm from '../../components/authForm';
 import Button from '../../components/button';
 import Input from '../../components/input';
-import './login.scss';
+import './LoginPage.scss';
 
 const inputsData = [
   { name: 'login', placeholder: 'Логин', type: 'text' },

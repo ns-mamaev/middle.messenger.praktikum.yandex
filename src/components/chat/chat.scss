@@ -2,15 +2,24 @@
 
 .chat-item {
   border-top: 1px solid $medium-accent-color;
-  padding: 12px 0;
+  padding: 12px 10px;
   display: grid;
   grid-template-columns: min-content auto min-content;
   grid-template-rows: min-content auto;
   gap: 4px 10px;
   align-items: flex-end;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $action-light-color;
+  }
 
   &:last-child {
     border-bottom: 1px solid $medium-accent-color;
+  }
+
+  &_active {
+    background-color: $action-light-color;
   }
 
   &__title {

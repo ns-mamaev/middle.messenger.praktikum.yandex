@@ -2,14 +2,16 @@ import './index.scss';
 import renderDOM, { createRoute } from './core/renderDOM';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
+import ChatsPage from './pages/ChatsPage';
 
 const root = document.querySelector('#root')!;
 
 createRoute('/signup', new RegisterPage());
 createRoute('/signin', new LoginPage());
+createRoute('/', new ChatsPage());
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderDOM('/signin', root);
+  renderDOM('/', root);
 });
 
 window.addEventListener('hashchange', () => {

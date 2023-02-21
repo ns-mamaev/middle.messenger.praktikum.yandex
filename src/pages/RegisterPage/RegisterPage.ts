@@ -1,5 +1,5 @@
 import Component from '../../core/Component';
-import './register.scss';
+import './RegisterPage.scss';
 import AuthForm from '../../components/authForm';
 import Button from '../../components/button';
 import Input from '../../components/input';
