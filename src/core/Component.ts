@@ -77,34 +77,6 @@ export default abstract class Component {
     stub.replaceWith(child.getContent());
   }
 
-  protected compile(template: string) {
-    const propsAndStubs = { ...this.props };
-
-    Object.entries(this.children).forEach(([key, child]) => {
-      if (Array.isArray(child)) {
-        propsAndStubs[key] = child.map((nestedChild) => this.createStub(nestedChild));
-      } else {
-        propsAndStubs[key] = this.createStub(child);
-      }
-    });
-
-    const fragment = this._createDocumentElement('template');
-
-    const html = Handlebars.compile(template, this.props)(propsAndStubs);
-
-    fragment.innerHTML = html;
-
-    Object.values(this.children).forEach((child) => {
-      if (Array.isArray(child)) {
-        child.forEach((nestedChild) => this.replaceStub(nestedChild, fragment));
-      } else {
-        this.replaceStub(child, fragment);
-      }
-    });
-
-    return fragment.content;
-  }
-
   _makePropsProxy(props: Props) {
     return new Proxy(props, {
       get(target, prop) {
@@ -197,6 +169,34 @@ export default abstract class Component {
     return this._element;
   }
 
+  protected compile(template: string) {
+    const propsAndStubs = { ...this.props };
+
+    Object.entries(this.children).forEach(([key, child]) => {
+      if (Array.isArray(child)) {
+        propsAndStubs[key] = child.map((nestedChild) => this.createStub(nestedChild));
+      } else {
+        propsAndStubs[key] = this.createStub(child);
+      }
+    });
+
+    const fragment = this._createDocumentElement('template');
+
+    const html = Handlebars.compile(template, this.props)(propsAndStubs);
+
+    fragment.innerHTML = html;
+
+    Object.values(this.children).forEach((child) => {
+      if (Array.isArray(child)) {
+        child.forEach((nestedChild) => this.replaceStub(nestedChild, fragment));
+      } else {
+        this.replaceStub(child, fragment);
+      }
+    });
+
+    return fragment.content;
+  }
+
   _render() {
     const template = this.render();
 
@@ -209,19 +209,25 @@ export default abstract class Component {
     }
     this._element = element;
 
-    this._removeEvents();
-
     this._addEvents();
   }
 
   protected render() {}
 
   _addEvents() {
-    const { events = {} } = this.props as { events: Record<string, () => void> };
+    const { events } = this.props as { events: Record<string, () => void> };
 
-    Object.keys(events).forEach((eventName) => {
-      this._element.addEventListener(eventName, events[eventName]);
-    });
+    if (events) {
+      Object.entries(events).forEach(([node, events]) => {
+        let element = this._element;
+        if (node !== 'root') {
+          element = this._element.querySelector(node);
+        }
+        Object.keys(events).forEach((eventName) => {
+          element.addEventListener(eventName, events[eventName]);
+        });
+      });
+    }
   }
 
   _removeEvents() {
@@ -243,4 +249,6 @@ export default abstract class Component {
   hide() {
     this.getContent().style.display = 'none';
   }
+
+  protected changeEvtTarget() {}
 }

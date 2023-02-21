@@ -11,7 +11,7 @@ createRoute('/signin', new LoginPage());
 createRoute('/', new ChatsPage());
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderDOM('/', root);
+  renderDOM('/signup', root);
 });
 
 window.addEventListener('hashchange', () => {

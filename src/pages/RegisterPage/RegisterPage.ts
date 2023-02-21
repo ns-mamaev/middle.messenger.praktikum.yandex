@@ -2,7 +2,7 @@ import Component from '../../core/Component';
 import './RegisterPage.scss';
 import AuthForm from '../../components/authForm';
 import Button from '../../components/button';
-import Input from '../../components/input';
+import Input from '../../components/Input';
 
 const inputsData = [
   { name: 'email', placeholder: 'Почта', type: 'email' },
@@ -18,7 +18,7 @@ const button = new Button({
   label: 'Зарегистрироваться',
   type: 'submit',
   events: {
-    click: (e: MouseEvent) => console.log(this),
+    root: { click: (e: MouseEvent) => console.log(e.target, 'submit!') },
   },
 });
 
@@ -30,7 +30,21 @@ class RegisterPage extends Component {
         href: '#/signin',
         text: 'Войти',
       },
-      inputs: inputsData.map((data) => new Input({ ...data })),
+      inputs: inputsData.map(
+        (data) =>
+          new Input({
+            ...data,
+            events: {
+              root: {
+                click: () => console.log('clcik'),
+              },
+              '.input__field': {
+                focus: () => console.log('focus'),
+                blur: () => console.log('blur'),
+              },
+            },
+          }),
+      ),
 
       button,
     });

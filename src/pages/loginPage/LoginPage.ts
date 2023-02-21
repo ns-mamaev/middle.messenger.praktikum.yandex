@@ -1,7 +1,7 @@
 import Component from '../../core/Component';
 import AuthForm from '../../components/authForm';
 import Button from '../../components/button';
-import Input from '../../components/input';
+import Input from '../../components/Input';
 import './LoginPage.scss';
 
 const inputsData = [
@@ -13,7 +13,9 @@ const button = new Button({
   label: 'Авторизоваться',
   type: 'button',
   events: {
-    click: (e: MouseEvent) => console.log(this),
+    root: {
+      click: (e: MouseEvent) => console.log(this),
+    },
   },
 });
 
