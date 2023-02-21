@@ -1,4 +1,3 @@
-import buttonTemplate from './button.hbs';
 import './button.scss';
 import Component from '../../core/Component';
 
@@ -15,6 +14,9 @@ interface ButtonProps {
 
 export default class Button extends Component {
   render() {
-    return this.compile(buttonTemplate, this.props);
+    return `
+      <button type='{{type}}' class='button'>
+        {{label}}
+      </button>`;
   }
 }

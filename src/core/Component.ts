@@ -1,3 +1,4 @@
+import Handlebars from 'Handlebars';
 import { v4 as makeUUID } from 'uuid';
 import EventBus from './EventBus';
 
@@ -76,8 +77,8 @@ export default abstract class Component {
     stub.replaceWith(child.getContent());
   }
 
-  protected compile(templator, props) {
-    const propsAndStubs = { ...props };
+  protected compile(template: string) {
+    const propsAndStubs = { ...this.props };
 
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
@@ -89,7 +90,9 @@ export default abstract class Component {
 
     const fragment = this._createDocumentElement('template');
 
-    fragment.innerHTML = templator(propsAndStubs);
+    const html = Handlebars.compile(template, this.props)(propsAndStubs);
+
+    fragment.innerHTML = html;
 
     Object.values(this.children).forEach((child) => {
       if (Array.isArray(child)) {
@@ -142,7 +145,6 @@ export default abstract class Component {
 
   _componentDidMount() {
     this.componentDidMount();
-    console.log(this, 'did mount');
   }
 
   componentDidMount(oldProps = {}) {}
@@ -196,7 +198,9 @@ export default abstract class Component {
   }
 
   _render() {
-    const fragment = this.render();
+    const template = this.render();
+
+    const fragment = this.compile(template);
 
     const element = fragment.firstElementChild as HTMLElement;
 
