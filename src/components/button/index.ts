@@ -15,7 +15,7 @@ interface ButtonProps {
 export default class Button extends Component {
   render() {
     return `
-      <button type='{{type}}' class='button'>
+      <button type='{{type}}' class='button' {{disabled}}>
         {{label}}
       </button>`;
   }

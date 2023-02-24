@@ -1,8 +1,6 @@
 import Component from '../../core/Component';
+import AuthForm from '../../components/AuthForm';
 import './RegisterPage.scss';
-import AuthForm from '../../components/authForm';
-import Button from '../../components/button';
-import Input from '../../components/Input';
 
 const inputsData = [
   { name: 'email', placeholder: 'Почта', type: 'email' },
@@ -14,14 +12,6 @@ const inputsData = [
   { name: 'password_repeat', placeholder: 'Пароль (ещё раз)', type: 'password' },
 ];
 
-const button = new Button({
-  label: 'Зарегистрироваться',
-  type: 'submit',
-  events: {
-    root: { click: (e: MouseEvent) => console.log(e.target, 'submit!') },
-  },
-});
-
 class RegisterPage extends Component {
   init() {
     this.children.authForm = new AuthForm({
@@ -30,23 +20,8 @@ class RegisterPage extends Component {
         href: '#/signin',
         text: 'Войти',
       },
-      inputs: inputsData.map(
-        (data) =>
-          new Input({
-            ...data,
-            events: {
-              root: {
-                click: () => console.log('clcik'),
-              },
-              '.input__field': {
-                focus: () => console.log('focus'),
-                blur: () => console.log('blur'),
-              },
-            },
-          }),
-      ),
-
-      button,
+      buttonLabel: 'Регистрация',
+      inputsData,
     });
   }
 
