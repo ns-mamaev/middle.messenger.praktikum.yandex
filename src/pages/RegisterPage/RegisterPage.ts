@@ -1,15 +1,58 @@
 import Component from '../../core/Component';
 import AuthForm from '../../components/AuthForm';
 import './RegisterPage.scss';
+import { ValidationRules } from '../../utills/validation';
 
-const inputsData = [
-  { name: 'email', placeholder: 'Почта', type: 'email' },
-  { name: 'login', placeholder: 'Логин', type: 'text' },
-  { name: 'first_name', placeholder: 'Имя', type: 'text' },
-  { name: 'second_name', placeholder: 'Фамилия', type: 'text' },
-  { name: 'phone', placeholder: 'Телефон', type: 'tel' },
-  { name: 'password', placeholder: 'Пароль', type: 'password' },
-  { name: 'password_repeat', placeholder: 'Пароль (ещё раз)', type: 'password' },
+type InputAttributes = {
+  name: string;
+  placeholder: string;
+  type: string;
+  validationType?: ValidationRules;
+};
+
+const inputsData: InputAttributes[] = [
+  {
+    name: 'email',
+    placeholder: 'Почта',
+    type: 'email',
+    validationType: ValidationRules.EMAIL,
+  },
+  {
+    name: 'login',
+    placeholder: 'Логин',
+    type: 'text',
+    validationType: ValidationRules.LOGIN,
+  },
+  {
+    name: 'first_name',
+    placeholder: 'Имя',
+    type: 'text',
+    validationType: ValidationRules.NAME,
+  },
+  {
+    name: 'second_name',
+    placeholder: 'Фамилия',
+    type: 'text',
+    validationType: ValidationRules.NAME,
+  },
+  {
+    name: 'phone',
+    placeholder: 'Телефон',
+    type: 'tel',
+    validationType: ValidationRules.PHONE,
+  },
+  {
+    name: 'password',
+    placeholder: 'Пароль',
+    type: 'password',
+    validationType: ValidationRules.PASSWORD,
+  },
+  {
+    name: 'password_repeat',
+    placeholder: 'Пароль (ещё раз)',
+    type: 'password',
+    validationType: ValidationRules.PASSWORD,
+  },
 ];
 
 class RegisterPage extends Component {

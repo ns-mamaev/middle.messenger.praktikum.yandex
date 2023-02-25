@@ -7,7 +7,7 @@ import ChatsPage from './pages/ChatsPage';
 const root = document.querySelector('#root')!;
 
 createRoute('/signup', new RegisterPage());
-createRoute('/signin', new LoginPage());
+// createRoute('/signin', new LoginPage());
 createRoute('/', new ChatsPage());
 
 document.addEventListener('DOMContentLoaded', () => {

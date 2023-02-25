@@ -7,6 +7,14 @@ class Input extends Component {
     return this.element.querySelector('input')?.value;
   }
 
+  get name() {
+    return this.props.name;
+  }
+
+  checkValidity() {
+    this.children.error.setProps({ errorMessage: this.props.onBlur(this.value) });
+  }
+
   init() {
     this.children.error = new InputError({
       errorMessage: '',
@@ -15,8 +23,12 @@ class Input extends Component {
     this.props.events = {
       input: {
         blur: () => {
-          this.children.error.setProps({ errorMessage: this.props.onBlur(this.value) });
+          const { message } = this.props.onBlur(this.value, this.props.validationType);
+          this.children.error.setProps({
+            errorMessage: message,
+          });
         },
+        focus: () => this.children.error.setProps({ errorMessage: '' }),
       },
     };
   }

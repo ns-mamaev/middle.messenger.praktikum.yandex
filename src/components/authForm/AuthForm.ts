@@ -2,8 +2,13 @@ import './AuthForm.scss';
 import Component from '../../core/Component';
 import Button from '../button';
 import Input from '../Input';
+import { validateInput } from '../../utills/validation';
 
 class AuthForm extends Component {
+  get inputs() {
+    return this.children.inputs;
+  }
+
   init() {
     this.children.button = new Button({
       label: this.props.buttonLabel,
@@ -14,25 +19,27 @@ class AuthForm extends Component {
       (data) =>
         new Input({
           ...data,
-          onBlur: (str: string) => {
-            const isCorrect = str.match(/[a-z]/);
-            this.children.button.setProps({ disabled: isCorrect ? '' : 'disabled' });
-            return isCorrect ? '' : 'Поле с ошибкой';
-          },
+          onBlur: validateInput,
         }),
     );
 
     this.props.events = {
       form: {
-        submit(e) {
+        submit: (e) => {
           e.preventDefault();
-          console.log('submit');
+          const isFormValid = this.inputs.every(({ value }) => validateInput(value));
+          this.inputs.forEach((input) => input.checkValidity());
+
+          if (isFormValid) {
+            console.log(
+              this.inputs.reduce((acc, { value, name }) => {
+                acc[name] = value;
+                return acc;
+              }, {}),
+            );
+          }
         },
       },
-      // на каждый блюр / фокус, 1)мы выполняем проверку всех инпутов и кнопки.
-      // button.setProps('disabled') по every
-      // 2) меняем пропсы ошибки для инпута
-      // сложнее: при сабмите, для всех инпутов выполняем метод check?
     };
   }
 
