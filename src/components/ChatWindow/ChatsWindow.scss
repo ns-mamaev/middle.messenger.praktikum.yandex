@@ -1,0 +1,135 @@
+@import '../../styles/variables.scss';
+
+.chats-window {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  flex-grow: 1;
+
+  &__chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid $medium-accent-color;
+    position: relative;
+  }
+
+  &__messages {
+    flex-grow: 1;
+  }
+
+  &__chat-avatar {
+    width: 34px;
+    height: 34px;
+    background-color: $accent-background-color;
+    border-radius: 50%;
+  }
+
+  &__chat-title {
+    flex-grow: 1;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 13px;
+  }
+
+  &__action-btn {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: none;
+    background: url(../../../static/kebab.svg) center / 3px 15px no-repeat;
+    cursor: pointer;
+    transition: all 0.1s ease;
+
+    &:hover {
+      background-color: $accent-background-color;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+
+  &__input-area {
+    display: flex;
+    padding: 11px 0;
+    border-top: 1px solid $medium-accent-color;
+    justify-content: space-between;
+    column-gap: 10px;
+    position: relative;
+  }
+
+  &__message-input {
+    flex-grow: 1;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 12px;
+    padding: 9px 20px;
+    border-radius: 30px;
+    border: none;
+    background-color: $accent-background-color;
+    color: inherit;
+
+    &:focus {
+      outline: 2px solid $dark-accent-color;
+    }
+  }
+
+  &__attach-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: url(../../../static/attach.svg) center / contain no-repeat;
+    cursor: pointer;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: $accent-background-color;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+
+  &__send-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: url(../../../static/arrow-right.svg) center / 60% no-repeat;
+    background-color: $action-color;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+
+  &__messages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+  }
+
+  &__popup-attach {
+    left: 0;
+    bottom: calc(100% + 10px);
+  }
+
+  &__popup-user {
+    right: 0;
+    top: calc(100% + 10px);
+  }
+}

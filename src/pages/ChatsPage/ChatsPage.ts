@@ -1,16 +1,32 @@
-// import chatItem from '../../components/chat';
+import Button from '../../components/button';
 import Chat from '../../components/Chat';
+import ChatsList from '../../components/ChatsList';
+import ChatsWindow from '../../components/ChatWindow';
+import Input from '../../components/Input';
+import Modal from '../../components/Modal';
 import Component from '../../core/Component';
+import { validateInput, ValidationRules } from '../../utills/validation';
 import './ChatsPage.scss';
 
-const chatsData = [
+type ChatsData = {
+  id: number;
+  title: string;
+  message: string;
+  time: string;
+  counter: number;
+  active?: boolean;
+};
+
+const chatsData: ChatsData[] = [
   {
+    id: 1,
     title: 'Иван',
     message: 'Привет, как идет работа над проектом?',
     time: '10:20',
     counter: 2,
   },
   {
+    id: 2,
     title: 'Пётр',
     message: `Образец очень длинного сообщения,
       которое даже не думает помещаться в заготовленный контейнер`,
@@ -19,12 +35,14 @@ const chatsData = [
     active: true,
   },
   {
+    id: 3,
     title: 'Василий',
     message: 'АУ! Ответишь наконец?',
     time: 'Вс',
     counter: 5,
   },
   {
+    id: 4,
     title: 'Василий',
     message: 'АУ! Ответишь наконец?',
     time: 'Вс',
@@ -32,9 +50,35 @@ const chatsData = [
   },
 ];
 
+const addUserModal = new Modal({
+  title: 'Добавить пользователя',
+  inputs: [
+    new Input({
+      name: 'login',
+      placeholder: 'Логин',
+      type: 'text',
+      validationType: ValidationRules.LOGIN,
+      onValidate: validateInput,
+    }),
+  ],
+  button: new Button({
+    label: 'Добавить',
+  }),
+});
+
+const onOpenAddUserModal = () => {
+  addUserModal.show();
+};
+
 export default class ChatsPage extends Component {
   init() {
-    this.children.chatList = chatsData.map((item) => new Chat({ ...item }));
+    this.children.chatsList = new ChatsList({
+      chats: chatsData.map((data) => new Chat({ ...data })),
+    });
+    this.children.chatsWindow = new ChatsWindow({
+      onOpenAddUserModal,
+    });
+    this.children.addUserModal = addUserModal;
   }
 
   render() {
@@ -43,28 +87,10 @@ export default class ChatsPage extends Component {
         <section class="chats__side-panel">
           <a class="chats__profile-link" href="#/profile">Профиль</a>
           <input type="text" class="chats__search-field" placeholder="Поиск">
-          <ul class="chats__chats-list">
-            {{#each chatList}}
-              {{{this}}}
-            {{/each}}
-          </ul>
+          {{{chatsList}}}
         </section>
-        <section class="chats__main-area">
-          <div class="chats__chat-header">
-            <div class="chats__chat-avatar"></div>
-            <h2 class="chats__chat-title">Иван</h2>
-            <button type="button" class="chats__action-btn"></button>
-          </div>
-          <div class="chats__messages">
-            В настоящий момент страница не обладает полноценным функционалом,
-            а работает как статичная заглушка. Кликабельна только ссылка на профиль
-          </div>
-          <div class="chats__input-area">
-            <button class="chats__attach-btn"></button>
-            <input type="text" class="chats__message-input" placeholder="Сообщение">
-            <button class="chats__send-btn" type="button"></button>
-          </div>
-        </section>
+        {{{chatsWindow}}}
+        {{{addUserModal}}}
       </div>`;
   }
 }

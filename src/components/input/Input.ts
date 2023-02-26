@@ -20,6 +20,7 @@ class Input extends Component {
   init() {
     this.children.error = new InputError({
       errorMessage: '',
+      classNames: 'input__error',
     });
 
     this.props.events = {
