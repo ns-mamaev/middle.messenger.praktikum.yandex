@@ -13,7 +13,7 @@ export default function renderDOM(route: string, root: Element): void | never {
   if (!routes[route]) {
     throw new Error("Route doesn't exist");
   }
-  const page = routes[route];
+  const page = new routes[route]();
 
   root.appendChild(page.element);
 

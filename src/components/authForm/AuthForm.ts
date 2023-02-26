@@ -1,8 +1,6 @@
 import './AuthForm.scss';
 import Component from '../../core/Component';
 import Button from '../button';
-import Input from '../Input';
-import { validateInput } from '../../utills/validation';
 
 class AuthForm extends Component {
   get inputs() {
@@ -15,29 +13,11 @@ class AuthForm extends Component {
       type: 'submit',
     });
 
-    this.children.inputs = this.props.inputsData.map(
-      (data) =>
-        new Input({
-          ...data,
-          onValidate: validateInput,
-        }),
-    );
-
     this.props.events = {
       form: {
         submit: (e: SubmitEvent) => {
           e.preventDefault();
-          const isFormValid = this.inputs.every(({ value }) => validateInput(value).result);
-          this.inputs.forEach((input) => input.checkValidity());
-
-          if (isFormValid) {
-            console.log(
-              this.inputs.reduce((acc, { value, name }) => {
-                acc[name] = value;
-                return acc;
-              }, {}),
-            );
-          }
+          this.props.onSubmit();
         },
       },
     };

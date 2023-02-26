@@ -8,11 +8,13 @@ class Input extends Component {
   }
 
   get name() {
-    return this.props.name;
+    return this.element.querySelector('input')?.name;
   }
 
-  checkValidity() {
-    this.children.error.setProps({ errorMessage: this.props.onValidate(this.value).message });
+  public checkValidity() {
+    const { result, message } = this.props.onValidate(this.value, this.props.validationType);
+    this.children.error.setProps({ errorMessage: message });
+    return result;
   }
 
   init() {
@@ -23,10 +25,7 @@ class Input extends Component {
     this.props.events = {
       input: {
         blur: () => {
-          const { message } = this.props.onValidate(this.value, this.props.validationType);
-          this.children.error.setProps({
-            errorMessage: message,
-          });
+          this.checkValidity();
         },
         focus: () => this.children.error.setProps({ errorMessage: '' }),
       },

@@ -1,23 +1,38 @@
 import Component from '../../core/Component';
 import AuthForm from '../../components/authForm';
-import Button from '../../components/button';
 import Input from '../../components/Input';
 import './LoginPage.scss';
+import { validateInput, ValidationRules } from '../../utills/validation';
 
-const inputsData = [
-  { name: 'login', placeholder: 'Логин', type: 'text' },
-  { name: 'password', placeholder: 'Пароль', type: 'password' },
-];
-
-const button = new Button({
-  label: 'Авторизоваться',
-  type: 'button',
-  events: {
-    root: {
-      click: (e: MouseEvent) => console.log(this),
-    },
-  },
+const loginInput = new Input({
+  name: 'login',
+  placeholder: 'Логин',
+  type: 'text',
+  validationType: ValidationRules.LOGIN,
+  onValidate: validateInput,
 });
+
+const passwordInput = new Input({
+  name: 'password',
+  placeholder: 'Пароль',
+  type: 'password',
+  validationType: ValidationRules.PASSWORD,
+  onValidate: validateInput,
+});
+
+const inputs = [loginInput, passwordInput];
+
+const onSubmit = () => {
+  const isFormNotValid = inputs.map((input) => input.checkValidity()).includes(false);
+  if (!isFormNotValid) {
+    const data = inputs.reduce((acc, { value, name }) => {
+      acc[name] = value;
+      return acc;
+    }, {});
+
+    console.log(data);
+  }
+};
 
 class LoginPage extends Component {
   init() {
@@ -27,8 +42,9 @@ class LoginPage extends Component {
         href: '#/signup',
         text: 'Нет аккаунта?',
       },
-      inputs: inputsData.map((data) => new Input({ ...data })),
-      button,
+      inputs,
+      buttonLabel: 'Войти',
+      onSubmit,
     });
   }
 

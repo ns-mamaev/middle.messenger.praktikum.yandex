@@ -3,7 +3,6 @@ export enum ValidationRules {
   LOGIN = 'login',
   EMAIL = 'email',
   PASSWORD = 'password',
-  PASSWORD_REPEAT = 'password-repeat',
   PHONE = 'phone',
   MESSAGE = 'message',
 }
@@ -50,8 +49,6 @@ export const validateInput = (value: string, validationType: ValidationRules): C
       return checkPassword(value);
     case ValidationRules.PHONE:
       return checkPhone(value);
-    case ValidationRules.PASSWORD_REPEAT:
-      console.log('repeat');
     default:
       return { result: true, message: '' };
   }
