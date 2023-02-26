@@ -66,9 +66,21 @@ const addUserModal = new Modal({
   }),
 });
 
-const onOpenAddUserModal = () => {
-  addUserModal.show();
-};
+const removeUserModal = new Modal({
+  title: 'Удалить пользователя',
+  inputs: [
+    new Input({
+      name: 'login',
+      placeholder: 'Логин',
+      type: 'text',
+      validationType: ValidationRules.LOGIN,
+      onValidate: validateInput,
+    }),
+  ],
+  button: new Button({
+    label: 'Удалить',
+  }),
+});
 
 export default class ChatsPage extends Component {
   init() {
@@ -76,9 +88,11 @@ export default class ChatsPage extends Component {
       chats: chatsData.map((data) => new Chat({ ...data })),
     });
     this.children.chatsWindow = new ChatsWindow({
-      onOpenAddUserModal,
+      onOpenAddUserModal: () => addUserModal.show(),
+      onOpenRemoveUserModal: () => removeUserModal.show(),
     });
     this.children.addUserModal = addUserModal;
+    this.children.removeUserModal = removeUserModal;
   }
 
   render() {
@@ -91,6 +105,7 @@ export default class ChatsPage extends Component {
         </section>
         {{{chatsWindow}}}
         {{{addUserModal}}}
+        {{{removeUserModal}}}
       </div>`;
   }
 }

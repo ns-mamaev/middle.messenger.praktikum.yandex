@@ -6,7 +6,7 @@ export default class ActionPopup extends Component {
     return `
       <ul class='action-popup {{classNames}}'>
         {{#each items}}
-          <li class='action-popup__item'>
+          <li class='action-popup__item' id={{this.id}}>
             <img class='action-popup__item-img' alt={{this.label}} src={{this.img}} />
             <span class='action-popup__item-label'>{{this.label}}</span>
           </li>

@@ -4,29 +4,46 @@ import './ChatsWindow.scss';
 import fileIcon from '../../../static/file.svg';
 import photoIcon from '../../../static/photo.svg';
 import locationIcon from '../../../static/location.svg';
+import addUserIcon from '../../../static/icon-add.svg';
+import removeUserIcon from '../../../static/icon-remove.svg';
+
+const attachPopup = new ActionPopup({
+  classNames: 'chats-window__popup-attach',
+  items: [
+    { label: 'Фото или Видео', img: photoIcon, id: 'photo' },
+    { label: 'Файл', img: fileIcon, id: 'file' },
+    { label: 'Локация', img: locationIcon, id: 'location' },
+  ],
+});
 
 export default class ChatsWindow extends Component {
   init() {
-    this.children.attachPopup = new ActionPopup({
-      classNames: 'chats-window__popup-attach',
-      items: [
-        { label: 'Фото или Видео', img: photoIcon },
-        { label: 'Файл', img: fileIcon },
-        { label: 'Локация', img: locationIcon },
-      ],
-    });
+    this.children.attachPopup = attachPopup;
 
-    this.children.userPopup = new ActionPopup({
+    const userPopup = new ActionPopup({
       classNames: 'chats-window__popup-user',
       items: [
-        { label: 'Добавить пользователя', img: photoIcon },
-        { label: 'Удалить пользователя', img: fileIcon },
+        { label: 'Добавить пользователя', img: addUserIcon, id: 'add-user' },
+        { label: 'Удалить пользователя', img: removeUserIcon, id: 'remove-user' },
       ],
+      events: {
+        '#add-user': {
+          click: this.props.onOpenAddUserModal,
+        },
+        '#remove-user': {
+          click: this.props.onOpenRemoveUserModal,
+        },
+      },
     });
+
+    this.children.userPopup = userPopup;
 
     this.props.events = {
       '.chats-window__action-btn': {
-        click: this.props.onOpenAddUserModal,
+        click: () => userPopup.show(),
+      },
+      '.chats-window__attach-btn': {
+        click: () => attachPopup.show(),
       },
     };
   }
