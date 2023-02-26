@@ -51,7 +51,7 @@ const inputsData: InputAttributes[] = [
     name: 'password_repeat',
     placeholder: 'Пароль (ещё раз)',
     type: 'password',
-    validationType: ValidationRules.PASSWORD,
+    validationType: ValidationRules.PASSWORD_REPEAT,
   },
 ];
 

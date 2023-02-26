@@ -12,7 +12,7 @@ class Input extends Component {
   }
 
   checkValidity() {
-    this.children.error.setProps({ errorMessage: this.props.onBlur(this.value) });
+    this.children.error.setProps({ errorMessage: this.props.onValidate(this.value).message });
   }
 
   init() {
@@ -23,7 +23,7 @@ class Input extends Component {
     this.props.events = {
       input: {
         blur: () => {
-          const { message } = this.props.onBlur(this.value, this.props.validationType);
+          const { message } = this.props.onValidate(this.value, this.props.validationType);
           this.children.error.setProps({
             errorMessage: message,
           });

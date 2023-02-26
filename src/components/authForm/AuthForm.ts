@@ -19,15 +19,15 @@ class AuthForm extends Component {
       (data) =>
         new Input({
           ...data,
-          onBlur: validateInput,
+          onValidate: validateInput,
         }),
     );
 
     this.props.events = {
       form: {
-        submit: (e) => {
+        submit: (e: SubmitEvent) => {
           e.preventDefault();
-          const isFormValid = this.inputs.every(({ value }) => validateInput(value));
+          const isFormValid = this.inputs.every(({ value }) => validateInput(value).result);
           this.inputs.forEach((input) => input.checkValidity());
 
           if (isFormValid) {
