@@ -11,6 +11,7 @@
   z-index: 10;
   display: none;
   flex-direction: column;
+  overflow: hidden;
 
   &__item {
     display: flex;

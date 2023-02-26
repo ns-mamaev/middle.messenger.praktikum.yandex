@@ -18,7 +18,7 @@ export default class Message extends Component {
             ? '<img class="message__image" src={{image}} alt="изображение"/>'
             : ''
         }
-        ${type === MessageTypes.TEXT ? '<p class="message__text">{{text}}</p>' : ''}
+        ${type === MessageTypes.TEXT ? '<span class="message__text">{{text}}</span>' : ''}
         <div class="message__meta">
           ${isRead ? '<div class="message__flag"></div>' : ''}
           <span class="message__time">{{time}}</time>
