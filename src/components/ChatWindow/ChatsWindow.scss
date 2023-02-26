@@ -1,7 +1,7 @@
 @import '../../styles/variables.scss';
 
 .chats-window {
-  min-height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   padding: 0 20px;
@@ -15,10 +15,6 @@
     padding: 10px 0;
     border-bottom: 1px solid $medium-accent-color;
     position: relative;
-  }
-
-  &__messages {
-    flex-grow: 1;
   }
 
   &__chat-avatar {
@@ -113,14 +109,34 @@
     }
   }
 
-  &__messages {
+  &__messages-area {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 20px;
+    flex-direction: column;
+    justify-content: flex-end;
     font-size: 14px;
     line-height: 20px;
     text-align: center;
+    flex-grow: 1;
+    overflow: hidden;
+    padding-bottom: 5px;
+  }
+
+  &__date {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 12px;
+    color: $dark-accent-color;
+    margin: 10px 0 30px;
+  }
+
+  &__messages {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    overflow-y: auto;
   }
 
   &__popup-attach {
