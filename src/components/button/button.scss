@@ -10,8 +10,21 @@
   border: none;
   padding: 12px;
 
+  &_color_red {
+    background-color: red;
+  }
+
   &:hover {
     cursor: pointer;
     opacity: 0.7;
+  }
+
+  &:disabled {
+    background-color: $medium-accent-color;
+    cursor: not-allowed;
+
+    &:hover {
+      opacity: unset;
+    }
   }
 }
