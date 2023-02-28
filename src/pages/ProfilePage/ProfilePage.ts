@@ -60,16 +60,22 @@ enum FormMode {
 
 export default class ProfilePage extends Component {
   constructor(props) {
-    super(props);
-    this.props.mode = FormMode.DEFAULT;
+    super({ ...props, mode: FormMode.DEFAULT });
   }
   init() {
-    this.children.form = new ProfileForm({
+    this.children.profileForm = new ProfileForm({
       button: new Button({
         label: 'Сохранить',
         type: 'submit',
       }),
       inputs: profileData.map((data) => new ProfileInput({ ...data })),
+    });
+    this.children.passwordForm = new ProfileForm({
+      button: new Button({
+        label: 'Сохранить',
+        type: 'submit',
+      }),
+      inputs: passwordData.map((data) => new ProfileInput({ ...data })),
     });
     this.props.profileName = 'Иван';
     this.children.avatarModal = new Modal({
@@ -83,9 +89,11 @@ export default class ProfilePage extends Component {
     this.children.actions = [
       new ActionLink({
         title: 'Изменить данные',
+        onClick: () => this.setProps({ mode: FormMode.PROFILE_EDIT }),
       }),
       new ActionLink({
         title: 'Изменить пароль',
+        onClick: () => this.setProps({ mode: FormMode.PASSWORD_EDIT }),
       }),
       new ActionLink({
         title: 'Выйти',
@@ -100,6 +108,7 @@ export default class ProfilePage extends Component {
     };
   }
   render() {
+    const { mode } = this.props;
     return `
       <section class="profile-page">
         <div class="profile-page__side-panel">
@@ -110,12 +119,17 @@ export default class ProfilePage extends Component {
             <span class="profile-page__avatar-inner">Поменять аватар<span>
           </button>
           <h2 class="profile-page__profile-name">{{profileName}}</h2>
-          {{{form}}}
-          <ul class="profile-page__actions">
-            {{#each actions}}
-              {{{this}}}
-            {{/each}}
-          </ul>
+          ${mode === FormMode.DEFAULT || mode === FormMode.PROFILE_EDIT ? '{{{profileForm}}}' : ''}
+          ${mode === FormMode.PASSWORD_EDIT ? '{{{passwordForm}}}' : ''}
+          ${
+            mode === FormMode.DEFAULT
+              ? `<ul class="profile-page__actions">
+                  {{#each actions}}
+                     {{{this}}}
+                  {{/each}}
+                  </ul>`
+              : ''
+          }
         </div>
         {{{avatarModal}}}
       </section>`;
