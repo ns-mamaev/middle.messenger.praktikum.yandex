@@ -1,10 +1,3 @@
-import linkTemplate from './actionLink.hbs';
-import './actionLink.scss';
+import ActionLink from './ActionLink';
 
-export default ({ dangerType, ...restProps }) => {
-  const additionalClass = dangerType ? ' action-link_type_danger' : '';
-  return linkTemplate({
-    additionalClass,
-    ...restProps,
-  });
-};
+export default ActionLink;

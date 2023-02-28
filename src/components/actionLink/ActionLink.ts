@@ -4,8 +4,8 @@ import './ActionLink.scss';
 export default class ActionLink extends Component {
   render() {
     return `
-      <a href='{{href}}' class='action-link{{additionalClass}}'>
+      <button type='button' class='action-link {{classNames}}'>
         {{ title }}
-      </a>`;
+      </button>`;
   }
 }

@@ -7,7 +7,15 @@
   line-height: 13px;
   color: $action-color;
   text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: unset;
+  text-align: left;
   border-bottom: 1px solid $medium-accent-color;
+
+  &:hover {
+    opacity: 0.7;
+  }
 
   &:last-child {
     border-bottom: none;
