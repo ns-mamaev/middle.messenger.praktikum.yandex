@@ -9,13 +9,13 @@ import ProfilePage from './pages/ProfilePage';
 const root = document.querySelector('#root')!;
 
 createRoute('/signup', RegisterPage);
-createRoute('/signin', LoginPage);
-createRoute('/error', ErrorPage);
-createRoute('/profile', ProfilePage);
-createRoute('/', ChatsPage);
+// createRoute('/signin', LoginPage);
+// createRoute('/error', ErrorPage);
+// createRoute('/profile', ProfilePage);
+// createRoute('/', ChatsPage);
 
 document.addEventListener('DOMContentLoaded', () => {
-  const route = window.location.hash.slice(1) || '/';
+  const route = window.location.hash.slice(1) || '/signup';
   renderDOM(route, root);
 });
 

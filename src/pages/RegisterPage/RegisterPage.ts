@@ -2,65 +2,66 @@ import Component from '../../core/Component';
 import AuthForm from '../../components/AuthForm';
 import './RegisterPage.scss';
 import { validateInput, ValidationRules } from '../../utills/validation';
-import Input from '../../components/Input';
+import FormField from '../../components/FormField';
+import { InputTypes } from '../../components/Input/Input';
 
-const emailInput = new Input({
+const emailInput = new FormField({
   name: 'email',
   placeholder: 'Почта',
-  type: 'email',
+  type: InputTypes.EMAIL,
   validationType: ValidationRules.EMAIL,
   onValidate: validateInput,
 });
 
-const loginInput = new Input({
+const loginInput = new FormField({
   name: 'login',
   placeholder: 'Логин',
-  type: 'text',
+  type: InputTypes.TEXT,
   validationType: ValidationRules.LOGIN,
   onValidate: validateInput,
 });
 
-const firstNameInput = new Input({
+const firstNameInput = new FormField({
   name: 'first_name',
   placeholder: 'Имя',
-  type: 'text',
+  type: InputTypes.TEXT,
   validationType: ValidationRules.NAME,
   onValidate: validateInput,
 });
 
-const secondNameInput = new Input({
+const secondNameInput = new FormField({
   name: 'second_name',
   placeholder: 'Фамилия',
-  type: 'text',
+  type: InputTypes.TEXT,
   validationType: ValidationRules.NAME,
   onValidate: validateInput,
 });
 
-const phoneInput = new Input({
+const phoneInput = new FormField({
   name: 'phone',
   placeholder: 'Телефон',
-  type: 'tel',
+  type: InputTypes.TEL,
   validationType: ValidationRules.PHONE,
   onValidate: validateInput,
 });
 
-const passwordInput = new Input({
+const passwordInput = new FormField({
   name: 'password',
   placeholder: 'Пароль',
-  type: 'password',
+  type: InputTypes.PASSWORD,
   validationType: ValidationRules.PASSWORD,
   onValidate: validateInput,
 });
 
-const passwordRepeatInput = new Input({
+const passwordRepeatInput = new FormField({
   name: 'password_repeat',
   placeholder: 'Пароль (ещё раз)',
-  type: 'password',
+  type: InputTypes.PASSWORD,
   validationType: ValidationRules.PASSWORD,
   onValidate: validateInput,
 });
 
-const inputs = [
+const fields = [
   emailInput,
   loginInput,
   firstNameInput,
@@ -70,36 +71,34 @@ const inputs = [
   passwordRepeatInput,
 ];
 
-const onSubmit = () => {
-  const isFormNotValid = inputs.map((input) => input.checkValidity()).includes(false);
-  const matchPasswords = passwordInput.value === passwordRepeatInput.value;
-  if (!matchPasswords) {
-    passwordRepeatInput.children.error.setProps({ errorMessage: 'Пароли не совпадают' });
-  }
-  if (!isFormNotValid) {
-    const data = inputs.reduce((acc, { value, name }) => {
-      acc[name] = value;
-      return acc;
-    }, {});
+// const onSubmit = () => {
+//   const isFormNotValid = inputs.map((input) => input.checkValidity()).includes(false);
+//   const matchPasswords = passwordInput.value === passwordRepeatInput.value;
+//   if (!matchPasswords) {
+//     passwordRepeatInput.children.error.setProps({ errorMessage: 'Пароли не совпадают' });
+//   }
+//   if (!isFormNotValid) {
+//     const data = inputs.reduce((acc, { value, name }) => {
+//       acc[name] = value;
+//       return acc;
+//     }, {});
 
-    console.log(data);
-  }
-};
+//     console.log(data);
+//   }
+// };
 
 class RegisterPage extends Component {
-  init() {
-    this.children.authForm = new AuthForm({
+  constructor() {
+    const authForm = new AuthForm({
       heading: 'Регистрация',
       link: {
         href: '#/signin',
-        text: 'Войти',
+        label: 'Войти',
       },
-      buttonLabel: 'Регистрация',
-      inputs,
-      onSubmit,
+      fields,
     });
+    super({ authForm });
   }
-
   render() {
     return `
       <section class='register-page'>

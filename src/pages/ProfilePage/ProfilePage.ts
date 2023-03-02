@@ -1,5 +1,5 @@
 import ActionLink from '../../components/ActionLink';
-import Button from '../../components/button';
+import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Modal from '../../components/Modal';
 import ProfileForm from '../../components/ProfileForm';

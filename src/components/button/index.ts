@@ -1,22 +1,3 @@
-import './button.scss';
-import Component from '../../core/Component';
+import Button from './Button';
 
-export enum ButtonTypes {
-  BUTTON = 'button',
-  SUBMIT = 'submit',
-}
-
-interface ButtonProps {
-  type?: ButtonTypes;
-  label?: string;
-  events?: Record<string, (e: Event) => void>;
-}
-
-export default class Button extends Component {
-  render() {
-    return `
-      <button type='{{type}}' class='button' {{disabled}}>
-        {{label}}
-      </button>`;
-  }
-}
+export default Button;

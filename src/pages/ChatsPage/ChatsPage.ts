@@ -1,4 +1,4 @@
-import Button from '../../components/button';
+import Button from '../../components/Button';
 import Chat from '../../components/Chat';
 import ChatsList from '../../components/ChatsList';
 import ChatsWindow from '../../components/ChatWindow';

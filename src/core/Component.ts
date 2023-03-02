@@ -2,7 +2,11 @@ import Handlebars from 'Handlebars';
 import { v4 as makeUUID } from 'uuid';
 import EventBus from './EventBus';
 
-type Props = object;
+export type ComponentProps = {
+  [key: string]: any;
+  children?: any;
+  events?: Record<string, (...args: any) => void>;
+};
 
 export default abstract class Component {
   static EVENTS = {
@@ -14,10 +18,10 @@ export default abstract class Component {
 
   _meta: {
     tagName: string;
-    props: Props;
+    props: ComponentProps;
   };
 
-  props: Props;
+  props: ComponentProps;
 
   private eventBus: EventBus;
 
@@ -26,8 +30,6 @@ export default abstract class Component {
   _id: string | null;
 
   children;
-
-  _shouldUpdate = false;
 
   constructor(propsAndChildren = {}) {
     const { children, props } = this._getPropsAndChildren(propsAndChildren);
@@ -77,7 +79,9 @@ export default abstract class Component {
     stub.replaceWith(child.getContent());
   }
 
-  _makePropsProxy(props: Props) {
+  _makePropsProxy(props: ComponentProps) {
+    const self = this;
+
     return new Proxy(props, {
       get(target, prop) {
         const value = target[prop];
@@ -85,7 +89,9 @@ export default abstract class Component {
       },
       set(target, prop, value) {
         if (target[prop] !== value) {
+          const oldTarget = { ...target };
           target[prop] = value;
+          self.eventBus.emit(Component.EVENTS.FLOW_CDU, oldTarget, target);
         }
         return true;
       },
@@ -145,11 +151,11 @@ export default abstract class Component {
   }
 
   setProps = (nextProps) => {
+    // debugger;
     if (!nextProps) {
       return;
     }
 
-    const oldProps = { ...this.props };
     const { children, props } = this._getPropsAndChildren(nextProps);
 
     if (Object.values(children).length) {
@@ -159,10 +165,6 @@ export default abstract class Component {
     if (Object.values(props).length) {
       Object.assign(this.props, props);
     }
-
-    this.eventBus.emit(Component.EVENTS.FLOW_CDU, oldProps, nextProps);
-
-    Object.assign(this.props, nextProps);
   };
 
   get element() {
@@ -205,6 +207,7 @@ export default abstract class Component {
     const element = fragment.firstElementChild as HTMLElement;
 
     if (this._element) {
+      this._removeEvents();
       this._element.replaceWith(element);
     }
     this._element = element;
@@ -218,14 +221,8 @@ export default abstract class Component {
     const { events } = this.props as { events: Record<string, () => void> };
 
     if (events) {
-      Object.entries(events).forEach(([node, events]) => {
-        let element = this._element;
-        if (node !== 'root') {
-          element = this._element.querySelector(node);
-        }
-        Object.keys(events).forEach((eventName) => {
-          element.addEventListener(eventName, events[eventName]);
-        });
+      Object.keys(events).forEach((eventName) => {
+        this._element.addEventListener(eventName, events[eventName]);
       });
     }
   }
@@ -249,6 +246,4 @@ export default abstract class Component {
   hide() {
     this.getContent().style.display = 'none';
   }
-
-  protected changeEvtTarget() {}
 }
